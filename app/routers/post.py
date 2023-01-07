@@ -6,7 +6,8 @@ from typing import Optional, List
 
 
 router = APIRouter(
-    prefix="/posts"
+    prefix="/posts",
+    tags=["Posts"]
 )
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.Post)

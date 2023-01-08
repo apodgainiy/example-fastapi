@@ -27,7 +27,6 @@ async def get_posts(
                 skip: int = 0,
                 search: Optional[str] = ""
                 ):
-    print(limit)
     posts = db.query(models.Post).filter(models.Post.title.contains(search)).\
             limit(limit).offset(skip).all()
     return posts

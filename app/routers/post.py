@@ -20,8 +20,16 @@ def create_post(post: schemas.PostCreate, db: Session = Depends(get_db),
     return new_post
 
 @router.get("/", response_model=List[schemas.Post])
-async def get_posts(db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
-    posts = db.query(models.Post).all()
+async def get_posts(
+                db: Session = Depends(get_db), \
+                current_user: int = Depends(oauth2.get_current_user),\
+                limit: int = 10,
+                skip: int = 0,
+                search: Optional[str] = ""
+                ):
+    print(limit)
+    posts = db.query(models.Post).filter(models.Post.title.contains(search)).\
+            limit(limit).offset(skip).all()
     return posts
 
 @router.get("/{id}", response_model=schemas.Post)
